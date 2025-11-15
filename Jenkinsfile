@@ -24,6 +24,17 @@ pipeline {
                 sh 'mvn test'
             }
         }
+
+        stage('Deploy') {
+            steps {
+                echo '🚀 Deploying application...'
+                sh '''
+                    JAR_FILE=$(ls target/*.jar | head -n 1)
+                    cp $JAR_FILE /home/ubuntu/deploy/app.jar
+                    nohup java -jar /home/ubuntu/deploy/app.jar > /home/ubuntu/deploy/app.log 2>&1 &
+                '''
+            }
+        }
     }
 
     post {
