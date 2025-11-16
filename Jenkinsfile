@@ -1,5 +1,5 @@
 pipeline {
-    agent { label 'aws' }
+    agent { label 'master' }
 
     tools {
         maven 'Maven3'
