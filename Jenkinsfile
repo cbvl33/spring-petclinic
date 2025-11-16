@@ -38,11 +38,20 @@ pipeline {
     }
 
     post {
-        success {
-            echo '✅ Build and tests completed successfully!'
-        }
-        failure {
-            echo '❌ Build failed!'
-        }
+    success {
+        echo '✅ Build success!'
+        emailext (
+            subject: "✅ Jenkins Build Successful",
+            body: "The build ${env.JOB_NAME} #${env.BUILD_NUMBER} finished successfully.",
+            to: "your_email@gmail.com"
+        )
+    }
+    failure {
+        echo '❌ Build failed!'
+        emailext (
+            subject: "❌ Jenkins Build Failed",
+            body: "The build ${env.JOB_NAME} #${env.BUILD_NUMBER} failed.\nCheck logs in Jenkins.",
+            to: "your_email@gmail.com"
+        )
     }
 }
